@@ -1,0 +1,42 @@
+.search-pane {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.9);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+
+    .close {
+        color: white;
+        position: absolute;
+        right: 0.25em;
+        font-size: 5em;
+        cursor: pointer;
+    }
+
+    .search-bar{
+        margin-top: 20em;
+        max-width: 60em;
+        margin-left: auto;
+        margin-right: auto;
+        transition: margin-top 0.5s;
+    
+        &.no-margin-top{
+            margin-top:0 !important;
+        }
+    
+        .input-group{
+            .input-group-append{
+                cursor: pointer;
+
+                .input-group-text {
+                    font-size: 3em;
+                }
+            }
+            input {
+                font-size: 3em;
+            }
+        }
+    }
+}
