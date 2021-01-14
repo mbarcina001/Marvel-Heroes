@@ -2,7 +2,7 @@
 
 ###### Project in development
 
-Training with React and Marvel API
+Learning React with Marvel API
 
 ## Running the project
 
