@@ -1,16 +1,14 @@
 import "./Thumbnail.scss"
 
-function Thumbnail(props) {
+export default function Thumbnail({ name, img }) {
     return (
         <div className="thumbnail">
             {
-                props.img.indexOf("image_not_available") === -1 ?
-                    <figure className="card" style={{"--image-src": "url(" + props.img + ")"}}></figure> :
-                    <figure className="card --no-image" style={{"--image-src": "url(" + props.img + ")"}}></figure>
+                img.indexOf("image_not_available") === -1 ?
+                    <figure className="card" style={{"--image-src": "url(" + img + ")"}}></figure> :
+                    <figure className="card --no-image" style={{"--image-src": "url(" + img + ")"}}></figure>
             }
-            <p>{props.name}</p>
+            <p>{name}</p>
         </div>
     )
 }
-
-export default Thumbnail;

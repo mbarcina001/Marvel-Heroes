@@ -5,7 +5,7 @@ import fontawesome from '@fortawesome/fontawesome'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-function Header(props) {
+export default function Header({ handleOpenSearchPane }) {
     fontawesome.library.add(faSearch);
 
     return (
@@ -13,11 +13,9 @@ function Header(props) {
             <Logo height="3.5em" width="8em" alt="logo"/>
             <h1>Heroes</h1>
 
-            <div className="button" onClick={props.handleOpenSearchPane}>
+            <div className="button" onClick={handleOpenSearchPane}>
                 <FontAwesomeIcon icon="search" />
             </div>
         </header>
     );
 }
-
-export default Header;

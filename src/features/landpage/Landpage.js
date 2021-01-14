@@ -3,7 +3,7 @@ import './Landpage.scss';
 
 import Thumbnail from 'shared/thumbnail/Thumbnail';
 
-function Landpage() {
+export default function Landpage() {
     const [ characterList, setCharacterList ] = useState([]);
 
     useEffect(() => {
@@ -25,5 +25,3 @@ function Landpage() {
         </div>
     )
 }
-
-export default Landpage;

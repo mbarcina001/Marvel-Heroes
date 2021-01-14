@@ -8,7 +8,7 @@ import Search from './core/search/Search';
 import Landpage from './features/landpage/Landpage'
 import { useEffect, useState } from 'react';
 
-function App() {
+export default function App() {
   const [ showSearchPane, setShowSearchPane ] = useState(false);
   const [ searchTerm, setSearchTerm ] = useState("");
 
@@ -20,12 +20,9 @@ function App() {
     setShowSearchPane(false);
   }
 
-  function handleSearch(searchTerm) {
-    setSearchTerm(searchTerm);
-  }
-
   useEffect(() => {
     console.log(searchTerm);
+    handleCloseSearchPane();
     // TODO: 6 calls to API
   }, [searchTerm])
 
@@ -35,7 +32,7 @@ function App() {
 
       <main>
         <div className="container">
-          <Search visible={showSearchPane} handleClose={handleCloseSearchPane} handleSearch={handleSearch}/>
+          <Search visible={showSearchPane} handleClose={handleCloseSearchPane} setSearchTerm={setSearchTerm}/>
           <Landpage />
         </div>
       </main>
@@ -44,5 +41,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
