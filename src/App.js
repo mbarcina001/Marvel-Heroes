@@ -1,43 +1,44 @@
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Header from './core/header/Header';
 import Footer from './core/footer/Footer';
+import Header from './core/header/Header';
+import Menu from './core/menu/Menu';
 import Search from './core/search/Search';
 
 import Landpage from './features/landpage/Landpage'
 import { useEffect, useState } from 'react';
 
+import {BrowserRouter as Router} from 'react-router-dom'
+
 export default function App() {
   const [ showSearchPane, setShowSearchPane ] = useState(false);
   const [ searchTerm, setSearchTerm ] = useState("");
 
-  function handleOpenSearchPane() {
-    setShowSearchPane(true);
-  }
-
-  function handleCloseSearchPane() {
-    setShowSearchPane(false);
-  }
-
   useEffect(() => {
     console.log(searchTerm);
-    handleCloseSearchPane();
+    setShowSearchPane(false)
     // TODO: 6 calls to API
   }, [searchTerm])
 
   return (
-    <div className="App">
-      <Header handleOpenSearchPane={handleOpenSearchPane}/>
+    <Router>
+      <div className="App">
+        <Header handleOpenSearchPane={ () => setShowSearchPane(true) }/>
+        <Menu></Menu>
+        <main>
+            <div className="container">
+              <Search 
+                visible={ showSearchPane }
+                handleClose={ () => setShowSearchPane(false) }
+                setSearchTerm={setSearchTerm}
+              />
+              
+            </div>
+        </main>
 
-      <main>
-        <div className="container">
-          <Search visible={showSearchPane} handleClose={handleCloseSearchPane} setSearchTerm={setSearchTerm}/>
-          <Landpage />
-        </div>
-      </main>
-
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </Router>
   );
 }
