@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Paginator from '../paginator/Paginator'
 import './Landpage.scss';
 
 import Thumbnail from 'shared/thumbnail/Thumbnail';
@@ -16,12 +17,16 @@ export default function Landpage() {
     }, []);
     
     return (
-        <div className="landpage row mt-4 mb-4">
-            {characterList.map(character => (
-                <div className="col-4" key={character.id}>
-                    <Thumbnail key={character.id} name={character.name} img={character.thumbnail.path + '.' + character.thumbnail.extension} />
-                </div>
-            ))}
+        <div>
+            <div className="landpage row">
+                {characterList.map(character => (
+                    <div className="col-4" key={character.id}>
+                        <Thumbnail key={character.id} name={character.name} img={character.thumbnail.path + '.' + character.thumbnail.extension} />
+                    </div>
+                ))}
+            </div>
+
+            <Paginator />
         </div>
     )
 }

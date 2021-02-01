@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
+import './Menu.scss';
 
 export default function Menu () {
     return (
-        <div class="d-flex">
+        <nav className="d-flex">
             <Link to="/characters">
                 Characters
             </Link>
@@ -14,6 +15,6 @@ export default function Menu () {
             <Link to="/creators">
                 Creators
             </Link>
-        </div>
+        </nav>
     )
 }

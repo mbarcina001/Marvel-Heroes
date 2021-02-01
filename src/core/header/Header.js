@@ -1,8 +1,8 @@
 import './Header.scss';
 import { ReactComponent as Logo } from 'assets/images/logo/MarvelLogo.svg'
-
 import fontawesome from '@fortawesome/fontawesome'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export default function Header({ handleOpenSearchPane }) {

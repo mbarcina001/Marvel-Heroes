@@ -1,0 +1,22 @@
+.page-link {
+    color: black;
+}
+
+.page-link:hover {
+    color: black;
+}
+
+.page-link:focus {
+    box-shadow: none;
+}
+
+.page-item.active .page-link {
+    border-color: black;
+    background-color: black;
+    cursor: default;
+}
+
+.page-item.disabled .page-link {
+    color: #dee2e6;
+    cursor: default;
+}
