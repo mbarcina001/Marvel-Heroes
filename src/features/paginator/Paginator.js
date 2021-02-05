@@ -5,48 +5,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { useContext } from 'react';
 import PaginatorContext from 'context/PaginatorContext';
+import GRID_STATE_ACTIONS from 'constants';
 
 export default function Paginator() {
     fontawesome.library.add(faChevronLeft);
     fontawesome.library.add(faChevronRight);
 
-    const { current, total} = useContext(PaginatorContext)
-
-    function paginationFirst() {
-        // TODO
-    };
+    const [ state, dispatch ] = useContext(PaginatorContext);
+    const { current, total } = state;
 
     function paginationPrevious() {
-        // TODO
-    };
-
-    function paginationPage(page) {
-        // TODO
+        pageChange(state.current === 1 ? state.current : state.current - 1);
     };
 
     function paginationNext() {
-        // TODO
+        pageChange(state.current === state.total ? state.current : state.current + 1);
     };
 
-    function paginationLast() {
-        // TODO
-    };
+    function pageChange(page) {
+        dispatch({
+            type: GRID_STATE_ACTIONS.PAGE_CHANGE,
+            value: page
+        })
+    }
 
     function getPaginationNumberButtons() {
-        console.log(current);
-        console.log(total);
         switch (Number(current)) {
             case 1:
                 return (
                     <React.Fragment>
                         <li className="page-item active page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current)) }>{ Number(current) }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
                         </li>
                         <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current) + 1) }>{ Number(current) + 1 }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 1) }>{ Number(current) + 1 }</a>
                         </li>
                         <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current) + 2) }>{ Number(current) + 2 }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 2) }>{ Number(current) + 2 }</a>
                         </li>
                     </React.Fragment>
                 );
@@ -54,13 +49,13 @@ export default function Paginator() {
                 return (
                     <React.Fragment>
                         <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current) - 2) }>{ Number(current) - 2 }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 2) }>{ Number(current) - 2 }</a>
                         </li>
                         <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current) - 1) }>{ Number(current) - 1 }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 1) }>{ Number(current) - 1 }</a>
                         </li>
                         <li className="page-item active page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current)) }>{ Number(current) }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
                         </li>
                     </React.Fragment>
                 )
@@ -68,13 +63,13 @@ export default function Paginator() {
                 return (
                     <React.Fragment>
                         <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current) - 1) }>{ Number(current) - 1 }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 1) }>{ Number(current) - 1 }</a>
                         </li>
                         <li className="page-item active page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current)) }>{ Number(current) }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
                         </li>
                         <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => paginationPage(Number(current) + 1) }>{ Number(current) + 1 }</a>
+                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 1) }>{ Number(current) + 1 }</a>
                         </li>
                     </React.Fragment>
                 )
@@ -84,24 +79,24 @@ export default function Paginator() {
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination justify-content-end">
-                <li className="page-item first disabled">
-                    <a className="page-link" href="/#" onClick={ () => paginationFirst() }>First</a>
+                <li className={`page-item first ${state.current === 1 ? "disabled" : ""}`}>
+                    <a className="page-link" href="/#" onClick={ () => pageChange(1) }>First</a>
                 </li>
-                <li className="page-item previous disabled">
+                <li className={`page-item previous ${state.current === 1 ? "disabled" : ""}`}>
                     <a className="page-link" href="/#" onClick={ () => paginationPrevious() } aria-label="Previous">
                         <span aria-hidden="true"><FontAwesomeIcon icon="chevron-left" /></span>
                         <span className="sr-only">Previous</span>
                     </a>
                 </li>
                 { getPaginationNumberButtons() }
-                <li className="page-item next">
+                <li className={`page-item next ${state.current === state.total ? "disabled" : ""}`}>
                     <a className="page-link" href="/#" onClick={ () => paginationNext() } aria-label="Next">
                         <span aria-hidden="true"><FontAwesomeIcon icon="chevron-right"  /></span>
                         <span className="sr-only">Next</span>
                     </a>
                 </li>
-                <li className="page-item last">
-                    <a className="page-link" href="/#" onClick={ () => paginationLast() }>Last</a>
+                <li className={`page-item last ${state.current === state.total ? "disabled" : ""}`}>
+                    <a className="page-link" href="/#" onClick={ () => pageChange(state.total) }>Last</a>
                 </li>
             </ul>
         </nav>

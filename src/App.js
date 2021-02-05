@@ -8,19 +8,22 @@ import Search from './core/search/Search';
 
 import Landpage from './features/landpage/Landpage'
 import { useEffect, useState } from 'react';
+import { useImmerReducer  } from "use-immer";
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import PaginatorContext from './context/PaginatorContext';
+import GridStateReducer from 'reducer/GridStateReducer'
 
 export default function App() {
   const [ showSearchPane, setShowSearchPane ] = useState(false);
   const [ searchTerm, setSearchTerm ] = useState("");
 
-  const initialPagination = {
+  const initialState = {
     current: 2,
     total: 3
   }
+  const [state, dispatch] = useImmerReducer (GridStateReducer, initialState);
 
   useEffect(() => {
     setShowSearchPane(false)
@@ -32,7 +35,7 @@ export default function App() {
       <div className="App">
         <Header handleOpenSearchPane={ () => setShowSearchPane(true) }/>
         <Menu></Menu>
-        <PaginatorContext.Provider value={initialPagination}>
+        <PaginatorContext.Provider value={[state, dispatch]}>
           <main className="mt-4 mb-4">
               <div className="container">
                 <Search 
