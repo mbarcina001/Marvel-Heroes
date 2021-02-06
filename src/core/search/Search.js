@@ -1,47 +1,40 @@
 import './Search.scss';
+import * as Constants from 'app-constants';
+import GridContext from 'context/GridContext';
 
-import fontawesome from '@fortawesome/fontawesome';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useContext } from 'react';
 
 
-export default function Search({ visible, setSearchTerm, handleClose }) {
-    fontawesome.library.add(faSearch);
-
-    const [searchInput, setSearchInput] = useState("");
+export default function Search() {
+    const [ state, dispatch ] = useContext(GridContext);
+    const { searchTerm } = state
+    let searchInput = searchTerm;
+    const { GRID_STATE_ACTIONS } = Constants;
 
     function handleChange (evt) {
-        setSearchInput(evt.target.value);
+        searchInput = evt.target.value;
     }
 
     function handleSearchClick() {
-        setSearchTerm(searchInput);
+        dispatch({
+            type: GRID_STATE_ACTIONS.CATEGORY_CHANGE,
+            value: searchInput
+        })
     }
 
     return (
-        <div className="search-pane" style={{display: visible ? 'block' : 'none'}}>
-            <div className="close" onClick={handleClose}>&times;</div>
-            <div className="search-bar">
-                <form>
-                    <div className="input-group mt-4 mb-1">
-                        <input
-                            name="searchInput"
-                            className="form-control"
-                            type="text"
-                            value={searchInput}
-                            onChange={handleChange}
-                            aria-label="Enter search term"
-                            placeholder="Enter search term"
-                        />
-                        <div className="input-group-append" onClick={handleSearchClick}>
-                            <span className="input-group-text">
-                                <FontAwesomeIcon icon="search" />
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <form className="form-inline my-2 my-lg-0">
+            <input
+                className="form-control mr-sm-2" 
+                name="searchInput"
+                type="search"
+                value={searchInput}
+                onChange={handleChange}
+                aria-label="Enter search term"
+                placeholder="Enter search term"
+            />
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={() => handleSearchClick()}>Search</button>
+        </form>
+        
     )
 }

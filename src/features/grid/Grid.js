@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Paginator from '../paginator/Paginator'
-import './Landpage.scss';
+import './Grid.scss';
 
 import Thumbnail from 'shared/thumbnail/Thumbnail';
 

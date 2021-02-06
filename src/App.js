@@ -4,51 +4,46 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './core/footer/Footer';
 import Header from './core/header/Header';
 import Menu from './core/menu/Menu';
-import Search from './core/search/Search';
 
-import Landpage from './features/landpage/Landpage'
-import { useEffect, useState } from 'react';
-import { useImmerReducer  } from "use-immer";
+import Grid from './features/grid/Grid'
+import { useEffect, useReducer } from 'react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import PaginatorContext from './context/PaginatorContext';
+import GridContext from './context/GridContext';
 import GridStateReducer from 'reducer/GridStateReducer'
+import * as Constants from 'app-constants';
 
 export default function App() {
-  const [ showSearchPane, setShowSearchPane ] = useState(false);
-  const [ searchTerm, setSearchTerm ] = useState("");
+  const { GRID_STATE_CATEGORIES } = Constants;
 
   const initialState = {
-    current: 2,
-    total: 3
+    current: 1,
+    total: 3,
+    searchTerm: '',
+    searchCategory: GRID_STATE_CATEGORIES.CHARACTERS
   }
-  const [state, dispatch] = useImmerReducer (GridStateReducer, initialState);
+  const [state, dispatch] = useReducer(GridStateReducer, initialState);
 
   useEffect(() => {
-    setShowSearchPane(false)
-    // TODO: 6 calls to API
-  }, [searchTerm])
+    console.log(state);
+    // TODO: make correspondent call to API
+  }, [state])
 
   return (
     <Router>
-      <div className="App">
-        <Header handleOpenSearchPane={ () => setShowSearchPane(true) }/>
-        <Menu></Menu>
-        <PaginatorContext.Provider value={[state, dispatch]}>
-          <main className="mt-4 mb-4">
+      <GridContext.Provider value={[state, dispatch]}>
+        <div className="App">
+          <Header />
+          <Menu></Menu>
+            <main className="mt-4 mb-4">
               <div className="container">
-                <Search 
-                  visible={ showSearchPane }
-                  handleClose={ () => setShowSearchPane(false) }
-                  setSearchTerm={setSearchTerm}
-                />
-                <Landpage />
+                <Grid />
               </div>
-          </main>
-        </PaginatorContext.Provider>
-        <Footer />
-      </div>
+            </main>
+          <Footer />
+        </div>
+      </GridContext.Provider>
     </Router>
   );
 }
