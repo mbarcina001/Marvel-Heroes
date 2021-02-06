@@ -21,7 +21,7 @@ export default function Menu () {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className={`nav-item ${searchCategory === GRID_STATE_CATEGORIES.CHARACTERS ? "active" : ""}`}>
-                        <a className="nav-link" href="/#" onClick={ () => searchCategoryChange(GRID_STATE_CATEGORIES.CHARACTERS) }>Characters <span className="sr-only">(current)</span></a>
+                        <a className="nav-link" href="/#" onClick={ () => searchCategoryChange(GRID_STATE_CATEGORIES.CHARACTERS) }>Characters</a>
                     </li>
                     <li className={`nav-item ${searchCategory === GRID_STATE_CATEGORIES.COMICS ? "active" : ""}`}>
                         <a className="nav-link" href="/#" onClick={ () => searchCategoryChange(GRID_STATE_CATEGORIES.COMICS) }>Comics</a>
