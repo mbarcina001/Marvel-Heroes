@@ -12,7 +12,6 @@ export default function Landpage() {
             .then(response => response.json())
             .then(response => {
                 setCharacterList(response.data.results);
-                console.log(response.data.results);
             });
     }, []);
     

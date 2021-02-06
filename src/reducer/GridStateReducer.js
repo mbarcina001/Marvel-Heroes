@@ -1,22 +1,27 @@
 import * as Constants from 'app-constants';
 
-export default function GridStateReducer(draft, action) {
+export default function GridStateReducer(state, action) {
     const { GRID_STATE_ACTIONS } = Constants;
-
-    console.log(draft);
-    console.log(action);
     
     switch (action.type) {
         case GRID_STATE_ACTIONS.PAGE_CHANGE:
-            draft.current = action.value;
-            return;
+            return {
+                ...state,
+                current: action.value
+            };
         case GRID_STATE_ACTIONS.SEARCH_TERM_CHANGE:
-            draft.searchTerm = action.value;
-            return;
+            return {
+                ...state,
+                current: 1,
+                searchTerm: action.value
+            };
         case GRID_STATE_ACTIONS.CATEGORY_CHANGE:
-            draft.searchCategory = action.value;
-            return;
+            return {
+                ...state,
+                current: 1,
+                searchCategory: action.value
+            };
         default:
-            return;
+            return state;
     }
 }
