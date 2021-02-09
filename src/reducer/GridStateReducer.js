@@ -21,6 +21,11 @@ export default function GridStateReducer(state, action) {
                 current: 1,
                 searchCategory: action.value
             };
+        case GRID_STATE_ACTIONS.SEARCH_MODE_CHANGE:
+            return {
+                ...state,
+                searchMode: action.value
+            };
         case GRID_STATE_ACTIONS.TOTAL_CHANGE:
             return {
                 ...state,

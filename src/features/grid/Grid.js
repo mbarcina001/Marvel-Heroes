@@ -1,9 +1,20 @@
-import Paginator from '../paginator/Paginator'
 import './Grid.scss';
+import { useContext } from 'react';
+import GridContext from 'context/GridContext';
 
 import Thumbnail from 'shared/thumbnail/Thumbnail';
+import Paginator from '../paginator/Paginator'
 
 export default function Grid({ list }) {
+    const [ state ] = useContext(GridContext);
+
+    function getPaginator() {
+        if (state.total > 1) {
+            return <Paginator />
+        }
+
+        return null;
+    }
 
     return (
         <div>
@@ -15,7 +26,7 @@ export default function Grid({ list }) {
                 ))}
             </div>
 
-            <Paginator />
+            { getPaginator() }
         </div>
     )
 }

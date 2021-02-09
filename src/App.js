@@ -17,12 +17,13 @@ import GridStateReducer from 'reducer/GridStateReducer'
 import * as Constants from 'app-constants';
 
 export default function App() {
-  const { GRID_STATE_ACTIONS, GRID_STATE_CATEGORIES } = Constants;
+  const { GRID_STATE_ACTIONS, GRID_STATE_CATEGORIES, GRID_STATE_SEARCH_MODES } = Constants;
 
   const initialState = {
     current: 1,
     total: 3,
     searchTerm: '',
+    searchMode: GRID_STATE_SEARCH_MODES.NAME_EQUAL,
     searchCategory: GRID_STATE_CATEGORIES.CHARACTERS,
     itemsPerPage: 20
   }
@@ -34,19 +35,31 @@ export default function App() {
     
   useEffect(() => {
     setLoading(true);
-    fetch(`http://gateway.marvel.com/v1/public/${state.searchCategory}?apikey=5aa2c0e77f889786c7da67172ceb8a0c&hash=aad01e90cda078d91f314188521cd3da&ts=1&offset=${(state.current - 1) * state.itemsPerPage}${state.searchTerm ? '&name=' + state.searchTerm : ''}`)
-        .then(response => response.json())
-        .then(response => {
-          setElementList(response.data.results);
+    fetch(`http://gateway.marvel.com/v1/public/${state.searchCategory}?apikey=5aa2c0e77f889786c7da67172ceb8a0c&hash=aad01e90cda078d91f314188521cd3da&ts=1&offset=${(state.current - 1) * state.itemsPerPage}${state.searchTerm ? '&' + state.searchMode +'=' + state.searchTerm : ''}`)
+      .then(response => response.json())
+      .then(response => {
+        setElementList(response.data.results);
 
-          dispatch({
-            type: GRID_STATE_ACTIONS.TOTAL_CHANGE,
-            value: Math.ceil(response.data.total / state.itemsPerPage)
-          })
+        dispatch({
+          type: GRID_STATE_ACTIONS.TOTAL_CHANGE,
+          value: Math.ceil(response.data.total / state.itemsPerPage)
+        })
 
-          setLoading(false);
-        });
-  }, [state.current, state.searchTerm, state.searchCategory]);
+        setLoading(false);
+      });
+  }, [state.current, state.searchTerm, state.searchCategory, state.searchMode]);
+
+  function getMainGrid() {
+    if (loading) {
+      return <Loading />
+    }
+
+    if (state.total === 0) {
+      return <p>No items found</p>
+    }
+
+    return <Grid list={elementList}/>
+  }
 
   return (
     <Router>
@@ -56,7 +69,7 @@ export default function App() {
           <Menu></Menu>
             <main className="pt-4 pb-4">
               <div className="container">
-                {loading ? <Loading /> : <Grid list={elementList}/> }
+                { getMainGrid() }
               </div>
             </main>
           <Footer />

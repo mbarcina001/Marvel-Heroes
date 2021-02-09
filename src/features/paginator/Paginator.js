@@ -32,49 +32,79 @@ export default function Paginator() {
     }
 
     function getPaginationNumberButtons() {
-        switch (Number(current)) {
-            case 1:
-                return (
-                    <React.Fragment>
-                        <li className="page-item active page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
-                        </li>
-                        <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 1) }>{ Number(current) + 1 }</a>
-                        </li>
-                        <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 2) }>{ Number(current) + 2 }</a>
-                        </li>
-                    </React.Fragment>
-                );
-            case total:
-                return (
-                    <React.Fragment>
-                        <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 2) }>{ Number(current) - 2 }</a>
-                        </li>
-                        <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 1) }>{ Number(current) - 1 }</a>
-                        </li>
-                        <li className="page-item active page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
-                        </li>
-                    </React.Fragment>
-                )
-            default:
-                return (
-                    <React.Fragment>
-                        <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 1) }>{ Number(current) - 1 }</a>
-                        </li>
-                        <li className="page-item active page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
-                        </li>
-                        <li className="page-item page">
-                            <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 1) }>{ Number(current) + 1 }</a>
-                        </li>
-                    </React.Fragment>
-                )
+        switch (Number(total)) {
+            case 2:
+                switch (Number(current)) {
+                    case 1:
+                        return (
+                            <React.Fragment>
+                                <li className="page-item active page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
+                                </li>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 1) }>{ Number(current) + 1 }</a>
+                                </li>
+                            </React.Fragment>
+                        );
+                    case total:
+                        return (
+                            <React.Fragment>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 1) }>{ Number(current) - 1 }</a>
+                                </li>
+                                <li className="page-item active page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
+                                </li>
+                            </React.Fragment>
+                        )
+                    default:
+                        return;
+                }
+            default:    
+                switch (Number(current)) {
+                    case 1:
+                        return (
+                            <React.Fragment>
+                                <li className="page-item active page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
+                                </li>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 1) }>{ Number(current) + 1 }</a>
+                                </li>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 2) }>{ Number(current) + 2 }</a>
+                                </li>
+                            </React.Fragment>
+                        );
+                    case total:
+                        return (
+                            <React.Fragment>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 2) }>{ Number(current) - 2 }</a>
+                                </li>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 1) }>{ Number(current) - 1 }</a>
+                                </li>
+                                <li className="page-item active page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
+                                </li>
+                            </React.Fragment>
+                        )
+                    default:
+                        return (
+                            <React.Fragment>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) - 1) }>{ Number(current) - 1 }</a>
+                                </li>
+                                <li className="page-item active page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current)) }>{ Number(current) }</a>
+                                </li>
+                                <li className="page-item page">
+                                    <a className="page-link" href="/#" onClick={ () => pageChange(Number(current) + 1) }>{ Number(current) + 1 }</a>
+                                </li>
+                            </React.Fragment>
+                        )
+                }
         }
     }
 
