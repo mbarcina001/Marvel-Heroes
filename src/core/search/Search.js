@@ -8,7 +8,7 @@ import { useState, useContext } from 'react';
 export default function Search() {
     const [ state, dispatch ] = useContext(GridContext);
     const { searchTerm } = state
-    const [searchInput, setSearchInput] = useState(searchTerm);
+    const [ searchInput, setSearchInput ] = useState(searchTerm);
     const { GRID_STATE_ACTIONS } = Constants;
 
     function handleChange (evt) {
@@ -18,7 +18,7 @@ export default function Search() {
     function handleSearchClick(evt) {
         evt.preventDefault();
         dispatch({
-            type: GRID_STATE_ACTIONS.CATEGORY_CHANGE,
+            type: GRID_STATE_ACTIONS.SEARCH_TERM_CHANGE,
             value: searchInput
         })
     }
