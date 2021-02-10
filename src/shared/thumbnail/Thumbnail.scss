@@ -5,12 +5,14 @@
 		height: 240px;
 		margin-bottom: 0px;
 		background-image: var(--image-src);
-		background-position: 50% 25%;
-		background-size: 125%;
+		background-position: 50% 10%;
+		background-size: 105%;
 		transition: background 400ms ease;
 		overflow: hidden;
 		&.--no-image {
 			background-position: 75% 0%;
+			background-size: 125%;
+
 			&:hover {
 				background-position: 10% 95%;
 			}
