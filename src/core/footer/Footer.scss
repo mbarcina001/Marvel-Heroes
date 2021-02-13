@@ -3,8 +3,13 @@ footer {
     background-color: #151515;
     text-align: center;
 
-    p {
+    a {
         color: white;
         padding-top: 0.75em;
+        display: block;
+
+        &:hover {
+            color: white;
+        }
     }
 }

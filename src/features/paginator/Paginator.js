@@ -3,7 +3,7 @@ import './Paginator.scss';
 import fontawesome from '@fortawesome/fontawesome'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import GridContext from 'context/GridContext';
 import * as Constants from 'app-constants';
 
@@ -12,7 +12,8 @@ export default function Paginator() {
     fontawesome.library.add(faChevronRight);
 
     const [ state, dispatch ] = useContext(GridContext);
-    const { current, total } = state;
+    const { current, total, itemsPerPage } = state;
+    const [ itemsPerPageInput, setItemsPerPageInput ] = useState(itemsPerPage);
 
     const { GRID_STATE_ACTIONS } = Constants;
 
@@ -28,7 +29,15 @@ export default function Paginator() {
         dispatch({
             type: GRID_STATE_ACTIONS.PAGE_CHANGE,
             value: page
-        })
+        });
+    }
+
+    function handleItemsPerPageChange(itemsPerPage) {
+        setItemsPerPageInput(itemsPerPage);
+        dispatch({
+            type: GRID_STATE_ACTIONS.ITEMS_PER_PAGE_CHANGE,
+            value: itemsPerPage
+        });
     }
 
     function getPaginationNumberButtons() {
@@ -109,8 +118,16 @@ export default function Paginator() {
     }
 
     return (
-        <nav aria-label="Page navigation">
-            <ul className="pagination justify-content-end">
+        <nav aria-label="Page navigation" className="d-flex justify-content-between">
+            <form className="form-inline my-2 my-lg-0">
+                <label className="mr-2">Items per page:</label>
+                <select className="form-control mr-sm-2" value={itemsPerPageInput} onChange={(evt) => handleItemsPerPageChange(evt.target.value)}>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                </select>
+            </form>
+            <ul className="pagination">
                 <li className={`page-item first ${current === 1 ? "disabled" : ""}`}>
                     <a className="page-link" href="/#" onClick={ () => pageChange(1) }>First</a>
                 </li>

@@ -14,12 +14,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import GridContext from './context/GridContext';
 import GridStateReducer from 'reducer/GridStateReducer'
 
+import FooterContext from './context/FooterContext';
+import FooterReducer from 'reducer/FooterReducer';
+
+import * as ApiService from './services/ApiService'
 import * as Constants from 'app-constants';
 
 export default function App() {
   const { GRID_STATE_ACTIONS, GRID_STATE_CATEGORIES, GRID_STATE_SEARCH_MODES } = Constants;
 
-  const initialState = {
+  const initialGridState = {
     current: 1,
     total: 3,
     searchTerm: '',
@@ -27,7 +31,10 @@ export default function App() {
     searchCategory: GRID_STATE_CATEGORIES.CHARACTERS,
     itemsPerPage: 20
   }
-  const [ state, dispatch ] = useReducer(GridStateReducer, initialState);
+
+  const initalFooterState = '<a href="http://marvel.com">Data provided by Marvel. © 2014 MARVEL</a>';
+  const [ gridState, gridDispatch ] = useReducer(GridStateReducer, initialGridState);
+  const [ footerState, footerDispatch ] = useReducer(FooterReducer, initalFooterState);
   
   const [ loading, setLoading ] = useState(true);
   const [ elementList, setElementList ] = useState([]);
@@ -35,26 +42,26 @@ export default function App() {
     
   useEffect(() => {
     setLoading(true);
-    fetch(`http://gateway.marvel.com/v1/public/${state.searchCategory}?apikey=5aa2c0e77f889786c7da67172ceb8a0c&hash=aad01e90cda078d91f314188521cd3da&ts=1&offset=${(state.current - 1) * state.itemsPerPage}${state.searchTerm ? '&' + state.searchMode +'=' + state.searchTerm : ''}`)
-      .then(response => response.json())
-      .then(response => {
-        setElementList(response.data.results);
+    ApiService.retrieveList(gridState).then(response => {
+      setLoading(false);
+      setElementList(response.data.results);
 
-        dispatch({
-          type: GRID_STATE_ACTIONS.TOTAL_CHANGE,
-          value: Math.ceil(response.data.total / state.itemsPerPage)
-        })
-
-        setLoading(false);
+      gridDispatch({
+        type: GRID_STATE_ACTIONS.TOTAL_CHANGE,
+        value: Math.ceil(response.data.total / gridState.itemsPerPage)
       });
-  }, [state.current, state.searchTerm, state.searchCategory, state.searchMode]);
+
+      footerDispatch(response.attributionHTML);
+
+    });
+  }, [gridState.current, gridState.searchTerm, gridState.searchCategory, gridState.searchMode, gridState.itemsPerPage]);
 
   function getMainGrid() {
     if (loading) {
       return <Loading />
     }
 
-    if (state.total === 0) {
+    if (gridState.total === 0) {
       return <p>No items found</p>
     }
 
@@ -63,7 +70,7 @@ export default function App() {
 
   return (
     <Router>
-      <GridContext.Provider value={[state, dispatch]}>
+      <GridContext.Provider value={[gridState, gridDispatch]}>
         <div className="App">
           <Header />
           <Menu></Menu>
@@ -72,7 +79,9 @@ export default function App() {
                 { getMainGrid() }
               </div>
             </main>
-          <Footer />
+            <FooterContext.Provider value={[footerState]}>
+              <Footer />
+            </FooterContext.Provider>
         </div>
       </GridContext.Provider>
     </Router>

@@ -31,6 +31,11 @@ export default function GridStateReducer(state, action) {
                 ...state,
                 total: action.value
             };
+        case GRID_STATE_ACTIONS.ITEMS_PER_PAGE_CHANGE:
+            return {
+                ...state,
+                itemsPerPage: action.value
+            };
         default:
             return state;
     }

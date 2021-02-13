@@ -1,9 +1,16 @@
 import './Footer.scss';
 
+import { useContext } from 'react';
+import FooterContext from 'context/FooterContext';
+
 export default function Footer() {
+
+    const [ state ] = useContext(FooterContext);
+    const htmlToInject = {
+        '__html': state
+    }
+
     return (
-        <footer>
-            <p>Data provided by Marvel. © 2014 Marvel</p>
-        </footer>
+        <footer dangerouslySetInnerHTML={htmlToInject}></footer>
     );
 }
