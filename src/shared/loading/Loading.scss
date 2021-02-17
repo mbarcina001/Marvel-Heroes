@@ -1,0 +1,16 @@
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        font-size: 10em;
+        color: white;
+    }
+}
