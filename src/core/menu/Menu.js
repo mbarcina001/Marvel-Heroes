@@ -29,6 +29,12 @@ export default function Menu () {
                     <li className={`nav-item ${searchCategory === GRID_STATE_CATEGORIES.CREATORS ? "active" : ""}`}>
                         <a className="nav-link" href="/#" onClick={ () => searchCategoryChange(GRID_STATE_CATEGORIES.CREATORS) }>Creators</a>
                     </li>
+                    <li className={`nav-item ${searchCategory === GRID_STATE_CATEGORIES.EVENTS ? "active" : ""}`}>
+                        <a className="nav-link" href="/#" onClick={ () => searchCategoryChange(GRID_STATE_CATEGORIES.EVENTS) }>Events</a>
+                    </li>
+                    <li className={`nav-item ${searchCategory === GRID_STATE_CATEGORIES.SERIES ? "active" : ""}`}>
+                        <a className="nav-link" href="/#" onClick={ () => searchCategoryChange(GRID_STATE_CATEGORIES.SERIES) }>Series</a>
+                    </li>
                 </ul>
                 <Search />
             </div>
