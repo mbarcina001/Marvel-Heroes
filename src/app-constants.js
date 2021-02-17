@@ -10,7 +10,9 @@ export const GRID_STATE_ACTIONS = {
 export const GRID_STATE_CATEGORIES = {
     CHARACTERS: 'characters',
     COMICS: 'comics',
-    CREATORS: 'creators'
+    CREATORS: 'creators',
+    EVENTS: 'events',
+    SERIES: 'series'
 }
 
 export const GRID_STATE_SEARCH_MODES = {
