@@ -61,11 +61,24 @@ export default function App() {
       return <Loading />
     }
 
+    if (gridState.total === 0 && gridState.searchTerm !== '') {
+      return <p>No items found for search term <b>"<u>{gridState.searchTerm}</u>"</b></p>
+    }
+
     if (gridState.total === 0) {
-      return <p>No items found</p>
+      return <p>No items found.</p>;
     }
 
     return <Grid list={elementList}/>
+  }
+
+  function getSearchResultMsg() {
+    if (gridState.searchTerm !== '' && gridState.total !== 0) {
+      if (gridState.searchMode === GRID_STATE_SEARCH_MODES.NAME_EQUAL) {
+        return <p>Showing search results for: <b>"<u>{gridState.searchTerm}</u>"</b></p>;
+      }
+      return <p>Showing search results starting by: <b>"<u>{gridState.searchTerm}</u>"</b></p>;
+    }
   }
 
   return (
@@ -76,6 +89,7 @@ export default function App() {
           <Menu></Menu>
             <main className="pt-4 pb-4">
               <div className="container">
+                { getSearchResultMsg() }
                 { getMainGrid() }
               </div>
             </main>
