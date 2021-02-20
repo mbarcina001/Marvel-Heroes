@@ -8,7 +8,7 @@ export default function Loading() {
     fontawesome.library.add(faSpinner);
 
     return (
-        <div class="overlay">
+        <div className="overlay">
             <FontAwesomeIcon icon="spinner" spin/>
         </div>
     )

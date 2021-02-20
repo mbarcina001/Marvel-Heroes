@@ -19,3 +19,14 @@ export async function retrieveList(state) {
     const response = await axios.get(`http://gateway.marvel.com/v1/public/${state.searchCategory}`, { params });
     return response.data;
 }
+
+export async function retrieveDetail(searchCategory, id) {
+    let params = {
+        apikey: '5aa2c0e77f889786c7da67172ceb8a0c',
+        hash: 'aad01e90cda078d91f314188521cd3da',
+        ts: 1
+    }
+
+    const response = await axios.get(`http://gateway.marvel.com/v1/public/${searchCategory}/${id}`, { params });
+    return response.data;
+}

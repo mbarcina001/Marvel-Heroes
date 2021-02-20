@@ -22,7 +22,7 @@ export default function Grid({ list }) {
 
     function getDisplayElement(elem) {
         return searchCategory === GRID_STATE_CATEGORIES.COMICS || searchCategory === GRID_STATE_CATEGORIES.CHARACTERS ?
-            <Thumbnail key={elem.id} name={getElemName(elem)} img={getElemImg(elem)} /> :
+            <Thumbnail key={elem.id} id={elem.id} name={getElemName(elem)} img={getElemImg(elem)} /> :
             <p>{getElemName(elem)}</p>
     }
 
